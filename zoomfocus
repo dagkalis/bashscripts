@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "focusing zoom in 30..."
+sleep 30 && wmctrl -a zoom

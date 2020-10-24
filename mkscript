@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "#!/bin/bash" > ~/programming/bashScripts/$1 
+chmod +x ~/programming/bashScripts/$1 
+notepadqq ~/programming/bashScripts/$1 &

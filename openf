@@ -1,0 +1,15 @@
+#!/bin/bash
+arg=$1-1
+arraylist=($(ls -1))
+if [ $# -eq 0 ]
+then 
+	echo "no args"
+elif [ $arg -lt 0 ]
+then
+	echo "out of bounds"
+elif [ $arg -ge "${#arraylist[@]}" ]
+then
+	echo "out of bounds"
+else
+	xdg-open "${arraylist[$arg]}"
+fi
