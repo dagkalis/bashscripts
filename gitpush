@@ -20,7 +20,7 @@ git branch
 echo -e "\n\n\033[1mCommit?\033[0m"
 select yn in "Yes" "No"; do
     case $yn in
-        Yes ) gitcommit $1; break2;;
+        Yes ) gitcommit $1; break;;
         No ) exit;;
     esac
 done
