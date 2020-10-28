@@ -1,9 +1,30 @@
 #!/bin/bash
-branch = git rev-parse --abbrev-ref HEAD
-if [ $branch -eq "branch" ]
+branch=$(git rev-parse --abbrev-ref HEAD)
+echo $branch
+if [ "$branch" = "master" ]
 then
 	echo "you are on master branch"
 	exit
 fi
-git add .
-git commit -m $1
+echo -e "\n\033[1mBraches:\033[0m"
+git branch
+
+
+echo -e "\n\n\033[1mCommit?\033[0m"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) gitcommit $1; break;;
+        No ) exit;;
+    esac
+done
+
+echo -e "\n\n\033[1mCommit?\033[0m"
+select yn in "Yes" "No"; do
+    case $yn in
+        Yes ) git push origin $branch; break;;
+        No ) exit;;
+    esac
+done
+
+exit
+
