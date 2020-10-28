@@ -1,13 +1,38 @@
 #!/bin/bash
+
 arraylist=($(ls -1))
-if [ $# -eq 1 ]
-then 
-	echo ${arraylist[$1]} 
-	exit
+
+if [ "${#arraylist[@]}" -eq 0 ]
+then echo -e "\t...nothing here dufus"
+     exit
 fi
+
+if [ $# -gt 0 ]
+then 
+	if [ $1 -lt 1 ]
+	then
+		echo -e "\t...out of bounds dufus"
+		exit
+	elif [ $1 -gt "${#arraylist[@]}" ]
+	then
+		echo -e "\t...out of bounds dufus"
+		exit
+	else
+		echo ${arraylist[$1 - 1]}
+		exit
+	fi
+fi
+
+
 declare -i counter=0 
 for i in ${arraylist[@]}
 do 
 	counter+=1
-	echo "$counter.$i"
+	if [ -d $i ]
+	then 
+	 echo -e " $counter\e[34m\e[1m  $i\e[0m"
+	else
+	 echo -e " $counter  $i"
+	fi
 done
+

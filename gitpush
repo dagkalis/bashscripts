@@ -1,0 +1,9 @@
+#!/bin/bash
+branch = git rev-parse --abbrev-ref HEAD
+if [ $branch -eq "branch" ]
+then
+	echo "you are on master branch"
+	exit
+fi
+git add .
+git commit -m $1
