@@ -4,22 +4,24 @@ arraylist=($(ls -1))
 
 if [ "${#arraylist[@]}" -eq 0 ]
 then echo -e "\t...nothing here dufus"
-     exit
+     exit 1
 fi
 
 if [ $# -gt 0 ]
 then 
 	if [ $1 -lt 1 ]
 	then
-		echo -e "\t...out of bounds dufus"
-		exit
+		echo -e "\t...out of bounds dufus"		
+
+		exit 1
 	elif [ $1 -gt "${#arraylist[@]}" ]
 	then
 		echo -e "\t...out of bounds dufus"
-		exit
+
+		exit 1
 	else
 		echo ${arraylist[$1 - 1]}
-		exit
+		exit 0
 	fi
 fi
 
@@ -35,4 +37,5 @@ do
 	 echo -e " $counter  $i"
 	fi
 done
+
 

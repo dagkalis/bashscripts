@@ -1,0 +1,3 @@
+#!/bin/bash
+
+chromium --app=file:///`pwd`/$1 --window-size=700,500

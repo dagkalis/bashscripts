@@ -1,9 +1,0 @@
-#!/bin/bash
-echo -e "\n\n\033[1mCommit?\033[0m"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) echo "thunder";echo thunderstruck; break;;
-        No ) exit;;
-    esac
-done
-

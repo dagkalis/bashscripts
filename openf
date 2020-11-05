@@ -1,22 +1,29 @@
 #!/bin/bash
-
-arg=$1-1
-arraylist=($(ls -1))
-if [ $# -eq 0 ]
-then 
-	echo "no args"
-elif [ $arg -lt 0 ]
-then
-	echo "out of bounds"
-elif [ $arg -ge "${#arraylist[@]}" ]
-then
-	echo "out of bounds"
+if [ 1 -eq 0 ]; then
+	arg=$1-1
+	arraylist=($(ls -1))
+	if [ $# -eq 0 ]
+	then 
+		echo "no args"
+	elif [ $arg -lt 0 ]
+	then
+		echo "out of bounds"
+	elif [ $arg -ge "${#arraylist[@]}" ]
+	then
+		echo "out of bounds"
+	fi
 else
+	
+	file=`list $1`
+	if [ $? -ne 0 ]; then
+		exit 1
+	fi
+	
 	if [ $# -eq 2 ]
 	then
-		$2 "${arraylist[$arg]}"
+		$2 $file
 	else
-		xdg-open "${arraylist[$arg]}"
+		xdg-open $file
 	fi
 	exit
 fi

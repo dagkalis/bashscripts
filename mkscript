@@ -1,4 +1,4 @@
 #!/bin/bash
-echo "#!/bin/bash" > ~/programming/bashScripts/$1 
-chmod +x ~/programming/bashScripts/$1 
-gedit ~/programming/bashScripts/$1 &
+echo "#!/bin/bash" > /home/keftes/programming/bashscripts/$1 
+chmod +x /home/keftes/programming/bashscripts/$1 
+gedit /home/keftes/programming/bashscripts/$1 &
