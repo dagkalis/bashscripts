@@ -1,0 +1,5 @@
+#!/bin/bash
+
+bashScripts () {
+  cd /home/keftes/programming/bashScripts
+}
