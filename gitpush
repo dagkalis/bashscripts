@@ -18,12 +18,24 @@ git branch
 
 
 echo -e "\n\n\033[1mCommit?\033[0m"
+declare -i answer
+while true; do
+    read -p "[y/n]" yn
+    case $yn in
+        [Yy]* ) gitcommit $1; break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
+if [ 1 -eq 0 ]; then
 select yn in "Yes" "No"; do
     case $yn in
         Yes ) gitcommit $1; break;;
         No ) exit;;
     esac
 done
+fi
 
 echo -e "\n\n\033[1mPush?\033[0m"
 select yn in "Yes" "No"; do
