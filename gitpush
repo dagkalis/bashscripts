@@ -28,14 +28,15 @@ while true; do
     esac
 done
 
-if [ 1 -eq 0 ]; then
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) gitcommit $1; break;;
-        No ) exit;;
-    esac
-done
-fi
+#old stuff, not used any more, kept it in case I need it
+# if [ 1 -eq 0 ]; then 
+# select yn in "Yes" "No"; do
+#     case $yn in
+#         Yes ) gitcommit $1; break;;
+#         No ) exit;;
+#     esac
+# done
+# fi
 
 echo -e "\n\n\033[1mPush?\033[0m [y/n]"
 declare -i answer
@@ -47,16 +48,6 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
-
-if [ 1 -eq 0 ]; then
-echo -e "\n\n\033[1mPush?\033[0m"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) git push origin $brach; break;;
-        No ) exit;;
-    esac
-done
-fi
 
 exit
 
