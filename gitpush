@@ -49,5 +49,18 @@ while true; do
     esac
 done
 
+echo -e -n "\n\n\033[1mMerge?\033[0m [y/n]: "
+declare -i answer
+while true; do
+    read -p "" yn
+    case $yn in
+        [Yy]* ) info=`git config --get remote.origin.url | grep -o -P '(?<=com:).*(?=.git)'`; link="https://github.com/$info/tree/$brach"; google-chrome $link; break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
 exit
 
+# l=`git config --get remote.origin.url | grep -o -P '(?<=com:).*(?=.git)'`
+# s="https://github.com/$l/tree/ofAndMore"
