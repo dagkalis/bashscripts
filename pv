@@ -1,3 +1,17 @@
 #!/bin/bash
+if [[ "$1" =~ ^[0-9]+$ ]]; then
+	echo "where it should"
+	file=`list $1`
+	if [ $? -ne 0 ]; then
+		echo "where it should not"		
+		exit 1
+	fi
+else
+	file=$1
+fi
+echo "file: $file"
+chromium --app=file:///`pwd`/$file --window-size=700,500 2> /dev/null
 
-chromium --app=file:///`pwd`/$1 --window-size=700,500
+
+
+
