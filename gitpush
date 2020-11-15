@@ -54,7 +54,7 @@ declare -i answer
 while true; do
     read -p "" yn
     case $yn in
-        [Yy]* ) info=`git config --get remote.origin.url | grep -o -P '(?<=com:).*(?=.git)'`; link="https://github.com/$info/tree/$brach"; google-chrome $link; break;;
+        [Yy]* ) info=`git config --get remote.origin.url | grep -o -P '(?<=com:).*(?=.git)'`; link="https://github.com/$info/tree/$branch"; google-chrome $link; break;;
         [Nn]* ) exit;;
         * ) echo "Please answer yes or no.";;
     esac
