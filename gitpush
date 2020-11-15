@@ -17,21 +17,49 @@ echo -e "\n\033[1mBraches:\033[0m"
 git branch
 
 
-echo -e "\n\n\033[1mCommit?\033[0m"
-select yn in "Yes" "No"; do
+echo -e -n "\n\n\033[1mCommit?\033[0m [y/n]: "
+declare -i answer
+while true; do
+    read yn
     case $yn in
-        Yes ) gitcommit $1; break;;
-        No ) exit;;
+        [Yy]* ) gitcommit $1; break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
     esac
 done
 
-echo -e "\n\n\033[1mPush?\033[0m"
-select yn in "Yes" "No"; do
+#old stuff, not used any more, kept it in case I need it
+# if [ 1 -eq 0 ]; then 
+# select yn in "Yes" "No"; do
+#     case $yn in
+#         Yes ) gitcommit $1; break;;
+#         No ) exit;;
+#     esac
+# done
+# fi
+
+echo -e -n "\n\n\033[1mPush?\033[0m [y/n]: "
+while true; do
+    read -p "" yn
     case $yn in
-        Yes ) git push origin $brach; break;;
-        No ) exit;;
+        [Yy]* ) git push origin $brach; break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
+echo -e -n "\n\n\033[1mMerge?\033[0m [y/n]: "
+declare -i answer
+while true; do
+    read -p "" yn
+    case $yn in
+        [Yy]* ) info=`git config --get remote.origin.url | grep -o -P '(?<=com:).*(?=.git)'`; link="https://github.com/$info/compare/$branch"; google-chrome $link; break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
     esac
 done
 
 exit
 
+# l=`git config --get remote.origin.url | grep -o -P '(?<=com:).*(?=.git)'`
+# s="https://github.com/$l/tree/ofAndMore"

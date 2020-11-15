@@ -5,4 +5,5 @@ then
 else
 	nautilus $1 &
 fi
-	
+exit
+exit
