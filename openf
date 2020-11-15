@@ -1,29 +1,33 @@
 #!/bin/bash
-if [ 1 -eq 0 ]; then
-	arg=$1-1
-	arraylist=($(ls -1))
-	if [ $# -eq 0 ]
-	then 
-		echo "no args"
-	elif [ $arg -lt 0 ]
-	then
-		echo "out of bounds"
-	elif [ $arg -ge "${#arraylist[@]}" ]
-	then
-		echo "out of bounds"
-	fi
-else
-	
+
+function opf(){
+	if [[ "$1" =~ ^[0-9]+$ ]]; then #going to open by num
+	#echo "where it should"
 	file=`list $1`
-	if [ $? -ne 0 ]; then
+	if [ $? -ne 0 ]; then #something went wrong with the list
+		#echo "where it should not"		
 		exit 1
 	fi
-	
-	if [ $# -eq 2 ]
-	then
+	else #going to open by name
+		file=$1
+	fi
+
+	if [ $# -eq 2 ]; then #second arguement means we need to open with specifit program
 		$2 $file
 	else
-		xdg-open $file
+		xdg-open $file &
 	fi
-	exit
+}
+
+if [ $# -eq 0 ]; then
+	(exec > >(echo "$(cat)"; exit); /home/keftes/programming/bashscripts/list)
+	sleep 0.1
+	read -p "Enter file name : " name
+	opf $name
+else
+	opf $1
 fi
+
+exit
+
+

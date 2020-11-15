@@ -1,5 +1,4 @@
 #!/bin/bash
-
 arraylist=($(ls -1))
 
 if [ "${#arraylist[@]}" -eq 0 ]
