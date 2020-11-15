@@ -37,6 +37,18 @@ select yn in "Yes" "No"; do
 done
 fi
 
+echo -e "\n\n\033[1mPush?\033[0m [y/n]"
+declare -i answer
+while true; do
+    read -p "" yn
+    case $yn in
+        [Yy]* ) git push origin $brach; break;;
+        [Nn]* ) exit;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
+if [ 1 -eq 0 ]; then
 echo -e "\n\n\033[1mPush?\033[0m"
 select yn in "Yes" "No"; do
     case $yn in
@@ -44,6 +56,7 @@ select yn in "Yes" "No"; do
         No ) exit;;
     esac
 done
+fi
 
 exit
 
