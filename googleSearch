@@ -1,0 +1,15 @@
+#!/bin/bash
+xclip -out -selection primary | xclip -in -selection clipboard
+echo `xclip -out -selection clipboard`
+
+search=""
+thunder=`xclip -out -selection clipboard`
+echo $thunder
+echo "Googling: $thunder"
+for term in $thunder; do
+    search="$search%20$term"
+done
+echo $search
+google-chrome "http://www.google.com/search?q=$search" &
+exit
+

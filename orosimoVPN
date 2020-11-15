@@ -1,0 +1,5 @@
+#!/bin/bash
+nmcli con up id "Orosimo"
+sudo route add -net 192.168.0.0 netmask 255.255.255.0 dev ppp0
+
+
