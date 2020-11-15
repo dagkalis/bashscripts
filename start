@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ $# -eq 0 ]
-	then 
-		nautilus ./ &
+then 
+	nautilus ./ &
 else
 	nautilus $1 &
 fi
