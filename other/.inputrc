@@ -1,0 +1,12 @@
+"\e[1;5C": forward-word
+"\e[1;5D": backward-word
+"\e[5C": forward-word
+"\e[5D": backward-word
+"\e\e[C": forward-word
+"\e\e[D": backward-word
+"\C-H": shell-backward-kill-word
+"\e[3;5~": shell-kill-word
+"\e[1;2C" : shell-kill-word
+TAB: menu-complete
+"\e[Z": menu-complete-backward
+
