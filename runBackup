@@ -1,0 +1,13 @@
+#!/bin/bash
+echo "starting joplin backup.."
+cp -r -v ~/.config/joplin-desktop /media/keftes/Ubuntu-Backup/joplin-backups/
+name="joplin-`date +'%d-%m-%Y'`"
+mv /media/keftes/Ubuntu-Backup/joplin-backups/joplin-desktop /media/keftes/Ubuntu-Backup/joplin-backups/"$name"
+echo "joplin backup stopped."
+
+
+lecDir="/media/keftes/Ubuntu-Files/keftes/Lectures/"
+lecBackupDir="/media/keftes/Ubuntu-Backup/Lectures/"
+echo "starting files backup"
+cp -u -v -a "$lecDir." $lecBackupDir
+echo "finished files backup"
