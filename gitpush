@@ -16,13 +16,14 @@ fi
 echo -e "\n\033[1mBraches:\033[0m"
 git branch
 
+echo -e "\n\033[1mcommit message:\033[0m \n$1"
 
 echo -e -n "\n\n\033[1mCommit?\033[0m [y/n]: "
 declare -i answer
 while true; do
     read yn
     case $yn in
-        [Yy]* ) gitcommit $1; break;;
+        [Yy]* ) gitcommit "$1"; break;;
         [Nn]* ) exit;;
         * ) echo "Please answer yes or no.";;
     esac
