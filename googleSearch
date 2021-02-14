@@ -3,7 +3,7 @@ xclip -out -selection primary | xclip -in -selection clipboard
 #echo `xclip -out -selection clipboard`
 
 thunder=`xclip -out -selection clipboard`
-if [[ "$thunder" =~ .com|.gr|.eu|.gov ]]; then
+if [[ "$thunder" =~ \.com|\.gr|\.eu|\.gov ]]; then
     echo "$thunder"
     google-chrome "$thunder" &
     exit
