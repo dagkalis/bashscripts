@@ -1,0 +1,29 @@
+#!/bin/bash
+#google-chrome 'https://authgr.zoom.us/j/94350791570?pwd=VEVNckd2M2lsQm9QNE1IQTVaTXpCZz09'
+
+declare -i counter=0
+while [ $counter -ne 100 ] 
+do
+    echo $counter
+    counter+=1
+    sleep 0.1
+    wmctrl=`wmctrl -l`
+    echo $wmctrl
+    if [[ $wmctrl  =~ 'Zoom Meeting' ]]
+    then 
+        echo "Found Meeting"
+        # move to first screen, focus to meeting and put fullscreen
+        pipe_failed=true 
+        wmctrl -r "Zoom Meeting" -e 0,0,0,1280,1024 && wmctrl -a 'Zoom Meeting' && wmctrl -r 'Zoom Meeting' -b toggle,fullscreen && ffmpeg -f x11grab -s 1920x1080  -i :0.0 out.mkv && pipe_failed=false
+        if [ $pipe_failed = true ]; then # send email
+            python3 /home/keftes/user/programming/python/mailer/main.py
+        fi
+        break
+        exit
+    fi
+done
+python3 /home/keftes/user/programming/python/mailer/main.py # meeting never opened
+
+# todo put appropriate file-name
+# test
+# maybe sent sms

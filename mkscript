@@ -1,4 +1,9 @@
 #!/bin/bash
+if [ $# -eq 0 ]
+then
+    echo -e "\t Give script name you dufus..."
+    exit
+fi
 echo "#!/bin/bash" > /home/keftes/user/programming/bashscripts/$1 
 chmod +x /home/keftes/user/programming/bashscripts/$1  
 kate /home/keftes/user/programming/bashscripts/$1 &
