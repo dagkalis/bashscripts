@@ -24,7 +24,7 @@ do
     wmctrl=`wmctrl -l` 
     if [[ $wmctrl  =~ 'Zoom Meeting' ]]
     then 
-        printer "\n\nFound Meeting"  
+        printer "\n\nFound Meeting"
         # move to first screen, focus to meeting and put fullscreen then ffmpeg
         file_name="`date +'%d-%m-%Y_%H:%M'`.mkv" 
         pipe_failed=true
