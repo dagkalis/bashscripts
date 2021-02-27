@@ -6,4 +6,4 @@ then
 fi
 echo "#!/bin/bash" > /home/keftes/user/programming/bashscripts/$1 
 chmod +x /home/keftes/user/programming/bashscripts/$1  
-kate /home/keftes/user/programming/bashscripts/$1 &
+code /home/keftes/user/programming/bashscripts/$1 &

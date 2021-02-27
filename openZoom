@@ -1,28 +1,39 @@
 #!/bin/bash
-#google-chrome 'https://authgr.zoom.us/j/94350791570?pwd=VEVNckd2M2lsQm9QNE1IQTVaTXpCZz09'
+export DISPLAY=:0
+google-chrome 'https://us05web.zoom.us/j/8434282909?pwd=akZnM0xpNkEwcUtIZjVXbEVwb1M4dz09&fbclid=IwAR2CkzTw58XrwaAz3ZQEh8j8arUNdiB6yaUPGLFWa_DD9Fx-ARvf3w-0jqw' &
+log_file=/home/keftes/user/lectures/log/"`date +'%d-%m-%Y_%H:%M'`.txt" 
+cd /home/keftes/user/lectures 
+echo "at: `pwd`" >> $log_file
+
 
 declare -i counter=0
 while [ $counter -ne 100 ] 
 do
-    echo $counter
+    sleep 2
     counter+=1
-    sleep 0.1
-    wmctrl=`wmctrl -l`
-    echo $wmctrl
+
+    echo -e "\n\n\ncounter: $counter" >> $log_file
+    export DISPLAY=:0
+    echo -e "wmctrl:\n `wmctrl -l | grep -i "zoom"`" >> $log_file
+    
+    export DISPLAY=:0 
+    wmctrl=`wmctrl -l` 
     if [[ $wmctrl  =~ 'Zoom Meeting' ]]
     then 
-        echo "Found Meeting"
-        # move to first screen, focus to meeting and put fullscreen
-        pipe_failed=true 
-        wmctrl -r "Zoom Meeting" -e 0,0,0,1280,1024 && wmctrl -a 'Zoom Meeting' && wmctrl -r 'Zoom Meeting' -b toggle,fullscreen && ffmpeg -f x11grab -s 1920x1080  -i :0.0 out.mkv && pipe_failed=false
+        echo -e "\n\nFound Meeting" >> $log_file 
+        # move to first screen, focus to meeting and put fullscreen then ffmpeg
+        file_name="`date +'%d-%m-%Y_%H:%M'`.mkv" 
+        pipe_failed=true
+        export DISPLAY=:0
+        wmctrl -r "Zoom Meeting" -e 0,0,0,1280,1024 && wmctrl -a 'Zoom Meeting' && wmctrl -r 'Zoom Meeting' -b toggle,fullscreen && ffmpeg -f x11grab -s 1920x1080  -i :0.0 "$file_name" && pipe_failed=false
         if [ $pipe_failed = true ]; then # send email
-            python3 /home/keftes/user/programming/python/mailer/main.py
+            python3 /home/keftes/user/programming/python/mailer/main.py  >> $log_file
         fi
         break
         exit
     fi
 done
-python3 /home/keftes/user/programming/python/mailer/main.py # meeting never opened
+python3 /home/keftes/user/programming/python/mailer/main.py  >> $log_file # meeting never opened
 
 # todo put appropriate file-name
 # test
