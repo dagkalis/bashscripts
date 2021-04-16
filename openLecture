@@ -1,0 +1,54 @@
+#!/bin/bash
+printer (){ # to see when debugging but also logs
+    echo -e "$1"
+    echo -e "$1" >> $log_file
+}
+export DISPLAY=:0 # needed for crontab
+chrome_text=''
+if [[ `date +%u` -eq 4 ]]; then # thursday
+ printer "thursday";
+ if [[ `date +%H` -eq 13 ]]; then # hour 13
+    chrome_text='https://authgr.zoom.us/j/4097573968?pwd=L0RwT1JraHBGUVdFVFBZODdkOHZxdz09'
+ fi
+ if [[ `date +%H` -eq 15 ]]; then # hour 13
+    chrome_text='https://authgr.zoom.us/j/4097573968?pwd=L0RwT1JraHBGUVdFVFBZODdkOHZxdz09'
+ fi
+fi
+google-chrome "$chrome_text" &
+log_file=/home/keftes/user/lectures/log/"`date +'%d-%m-%Y_%H:%M'`.txt" 
+cd /home/keftes/user/lectures 
+printer "at: `pwd`" 
+
+ 
+declare -i counter=0
+while [ $counter -ne 100 ] 
+do
+    sleep 2
+    counter+=1
+
+    printer "\n\n\ncounter: $counter" 
+    export DISPLAY=:0
+    printer "wmctrl:\n `wmctrl -l | grep -i "zoom"`" 
+    
+    export DISPLAY=:0 
+    wmctrl=`wmctrl -l` 
+    if [[ $wmctrl  =~ 'Zoom Meeting' ]]
+    then 
+        printer "\n\nFound Meeting"
+        # move to first screen, focus to meeting and put fullscreen then ffmpeg
+        file_name="`date +'%d-%m-%Y_%H:%M'`.mkv" 
+        pipe_failed=true
+        export DISPLAY=:0
+        wmctrl -r "Zoom Meeting" -e 0,0,0,1280,1024 && wmctrl -a 'Zoom Meeting' && wmctrl -r 'Zoom Meeting' -b toggle,fullscreen && ffmpeg -f x11grab -s 1920x1080  -i :0.0 -f alsa -i default "$file_name" && pipe_failed=false
+        if [ $pipe_failed = true ]; then # send email
+            python3 /home/keftes/user/programming/python/mailer/main.py  
+        fi
+        break
+        exit
+    fi
+done
+python3 /home/keftes/user/programming/python/mailer/main.py   # meeting never opened
+
+# todo put appropriate file-name
+# test
+# maybe sent sms
