@@ -1,0 +1,5 @@
+#!/bin/bash
+# the object is to copy selected stuff without the line-breaks
+xclip -out -selection primary | xclip -in -selection clipboard # get selected into clipboard
+thunder=`xclip -out -selection clipboard` # put clipboard into variable - bash removes line breaks 
+echo $thunder | xclip -selection clipboard # put back into clipboard

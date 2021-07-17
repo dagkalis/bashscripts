@@ -1,0 +1,9 @@
+#!/bin/bash
+export DISPLAY=:0 # display_varbiable, needed for crontab
+export XDG_RUNTIME_DIR="/run/user/1000" # audio variable, needed for crontab
+# export LD_LIBRARY_PATH=/usr/lib/
+cd /home/keftes/user/uni/lectures/tmp
+
+file_name="`date +'%d-%m-%Y_%H:%M'`.mkv" 
+google-chrome
+/usr/bin/ffmpeg -nostdin -f x11grab -s 1920x1080  -i :0.0 -f alsa -i default "$file_name" 2> "log.txt"

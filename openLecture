@@ -1,33 +1,32 @@
 #!/bin/bash
 
-export DISPLAY=:0 # needed for crontab
+export DISPLAY=:0 # display_varbiable, needed for crontab
+export XDG_RUNTIME_DIR="/run/user/1000" # audio variable, needed for crontab
 
 chrome_text=''
 
 main() {
     log_file=/home/keftes/user/uni/lectures/log/"`file_count`.`date +'%d-%m-%Y_%H:%M'`.txt" 
-    chooseLecture
+    chooseLecture # get chrome link
     if [[ -z "$chrome_text" ]]; then # check if string is equal to ''
         printer "no chrome_text. Aborting"
         exit
     fi
 
-    google-chrome "$chrome_text" &
-    cd /home/keftes/user/lectures 
+    google-chrome "$chrome_text" & # open zoom in chrome
+    cd /home/keftes/user/uni/lectures 
     printer "at: `pwd`" 
 
     
     declare -i counter=0
-    while [ $counter -ne 100 ] 
+    while [ $counter -ne 100 ] # wait 100 * 2sec for lecture to open, check every 2secs
     do
         sleep 2
         counter+=1
 
         printer "counter: $counter" 
-        export DISPLAY=:0
         printer "wmctrl:\n `wmctrl -l | grep -i "zoom"`" 
         
-        export DISPLAY=:0 
         wmctrl=`wmctrl -l` 
         if [[ $wmctrl  =~ 'Zoom Meeting' ]]
         then 
@@ -35,9 +34,8 @@ main() {
             # move to first screen, focus to meeting and put fullscreen then ffmpeg
             file_name="`date +'%d-%m-%Y_%H:%M'`.mkv" 
             pipe_failed=true
-            export DISPLAY=:0
             wmctrl -r "Zoom Meeting" -e 0,0,0,1280,1024 && wmctrl -a 'Zoom Meeting' && wmctrl -r 'Zoom Meeting' -b toggle,fullscreen && ffmpeg -f x11grab -s 1920x1080  -i :0.0 -f alsa -i default "$file_name" && pipe_failed=false
-            if [ $pipe_failed = true ]; then # send email
+            if [ $pipe_failed = true ]; then # send email if pipe_failed
                 python3 /home/keftes/user/programming/python/mailer/main.py  
             fi
             break
@@ -49,21 +47,59 @@ main() {
 
 
 chooseLecture(){
+    if [[ `date +%u` -eq 1 ]]; then # monday
+        printer "monday";
+        if [[ `date +%H` -eq 9 ]]; then # hour 9 (vakali)
+            chrome_text='https://authgr.zoom.us/j/96886028346'
+        fi
+    fi
+
+    if [[ `date +%u` -eq 2 ]]; then # tuesday
+        printer "tuesday";
+        if [[ `date +%H` -eq 9 ]]; then # hour 9 (database technology)
+            chrome_text='https://authgr.zoom.us/j/94350791570?pwd=VEVNckd2M2lsQm9QNE1IQTVaTXpCZz09'
+        fi
+        if [[ `date +%H` -eq 18 ]]; then # hour 9 (vakali)
+            chrome_text='https://authgr.zoom.us/j/98603476790?pwd=NDl1N1RhN09TR1lmeVhFRzNCLzlVdz09'
+        fi
+    fi
+
+
     if [[ `date +%u` -eq 4 ]]; then # thursday
-    printer "thursday";
-    if [[ `date +%H` -eq 13 ]]; then # hour 13
-        chrome_text='https://authgr.zoom.us/j/4097573968?pwd=L0RwT1JraHBGUVdFVFBZODdkOHZxdz09'
+        printer "thursday";
+        if [[ `date +%H` -eq 13 ]]; then # hour 13
+            chrome_text='https://authgr.zoom.us/j/4097573968?pwd=L0RwT1JraHBGUVdFVFBZODdkOHZxdz09'
+        fi
+        if [[ `date +%H` -eq 15 ]]; then # hour 13
+            chrome_text='https://authgr.zoom.us/j/4097573968?pwd=L0RwT1JraHBGUVdFVFBZODdkOHZxdz09'
+        fi
     fi
-    if [[ `date +%H` -eq 15 ]]; then # hour 13
-        chrome_text='https://authgr.zoom.us/j/4097573968?pwd=L0RwT1JraHBGUVdFVFBZODdkOHZxdz09'
+
+    if [[ `date +%u` -eq 5 ]]; then # friday
+        printer "friday";
+        if [[ `date +%H` -eq 13 ]]; then # hour 13
+            chrome_text='https://authgr.zoom.us/j/4097573968?pwd=L0RwT1JraHBGUVdFVFBZODdkOHZxdz09'
+        fi
+        if [[ `date +%H` -eq 15 ]]; then # hour 13
+            chrome_text='https://authgr.zoom.us/j/99415293094?pwd=WWduMkpGMnRBTzR5Z1Jna1o2MXZndz09'
+        fi
     fi
-    fi
+
+
 
 
     if [[ `date +%u` -eq 6 ]]; then # saturday (testing)
     printer "saturday";
-        if [[ `date +%H` -eq 2 ]]; then # hour 2
-            chrome_text='https://authgr.zoom.us/j/4097573968?pwd=L0RwT1JraHBGUVdFVFBZODdkOHZxdz09'
+        if [[ `date +%H` -eq 15 ]]; then 
+            printer "1 o'clock"
+            chrome_text='https://zoom.us/j/95682540327?pwd=Y2g0Y1N2TTBsNERHZW03eU1aSmxLZz09'
+        fi
+    fi
+    if [[ `date +%u` -eq 7 ]]; then # sunday (testing)
+    printer "sunday";
+        if [[ `date +%H` -eq 23 ]]; then 
+            printer "1 o'clock"
+            chrome_text='https://us05web.zoom.us/j/8434282909?pwd=akZnM0xpNkEwcUtIZjVXbEVwb1M4dz09'
         fi
     fi
 }
