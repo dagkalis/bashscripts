@@ -1,8 +1,8 @@
 #!/bin/bash
-xclip -out -selection primary | xclip -in -selection clipboard
+# xclip -out -selection primary | xclip -in -selection clipboard
 #echo `xclip -out -selection clipboard`
 
-thunder=`xclip -out -selection clipboard`
+thunder=`xclip -out -selection primary`
 if [[ "$thunder" =~ \.com|\.gr|\.eu|\.gov|.org ]]; then
     echo "$thunder"
     google-chrome "$thunder" &
