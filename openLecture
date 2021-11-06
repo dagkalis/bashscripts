@@ -47,6 +47,31 @@ main() {
 
 
 chooseLecture(){
+    if [[ `date +%H` -eq 16 ]]; then # frontistiria stamelou 6 to apogeuma
+        chrome_text='https://authgr.zoom.us/j/5995405830?pwd=QTZSUXFzM0IydC8yWkRsSTFMNk1rUT09'
+        return
+    fi 
+
+    if [[ `date +%H` -eq 10 ]]; then # test
+        chrome_text='https://authgr.zoom.us/j/92146453592?pwd=OHN5Z29hVlZPeVh3c0xyY3dRN0VKZz09'
+        return
+    fi 
+
+    if [[ `date +%H` -eq 14 ]]; then # frontistiria kotropoulou
+        chrome_text='https://authgr.zoom.us/j/92146453592?pwd=OHN5Z29hVlZPeVh3c0xyY3dRN0VKZz09'
+        return
+    fi 
+
+    if [[ `date +%H` -eq 12 ]]; then # frontistiria kotropoulou
+        chrome_text='https://authgr.zoom.us/j/92146453592?pwd=OHN5Z29hVlZPeVh3c0xyY3dRN0VKZz09'
+        return
+    fi 
+
+    
+
+    
+
+    
     if [[ `date +%u` -eq 1 ]]; then # monday
         printer "monday";
         if [[ `date +%H` -eq 9 ]]; then # hour 9 (vakali)
