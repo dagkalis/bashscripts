@@ -1,2 +1,11 @@
 #!/bin/bash
-gedit $1 &
+cd ~/user/notes
+if test -f "$1"; then
+    echo "$1 exists."
+    file=$1
+else
+    echo "$1 does not exist."
+    file=`date +'%d-%m-%Y_%H:%M'`
+    echo $1 > $file
+fi
+intellij-idea-community -e $file &

@@ -1,0 +1,4 @@
+#!/bin/bash
+branch=$(git rev-parse --abbrev-ref HEAD)
+echo -e "git pull origin $branch\n"
+git pull origin $branch
