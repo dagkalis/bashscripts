@@ -1,0 +1,5 @@
+{
+  "defaultEnvironment": "PRODUCTION",
+  "dismissDurationMin": 3,
+  "okDurationMin": 45
+}

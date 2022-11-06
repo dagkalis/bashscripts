@@ -1,0 +1,8 @@
+#!/bin/bash
+appDir=/home/keftes/user/programming/Notifier/out/artifacts/Notifier_main_jar/
+cd $appDir
+logFile="${appDir}log.txt"
+echo -e "\n\n" >> $logFile
+date +'%d-%m-%Y_%H:%M' >> $logFile
+
+java -p /usr/lib/jvm/javafx-sdk-17.0.1/lib --add-modules javafx.controls,javafx.fxml -jar "${appDir}Notifier.main.jar" $@ >> $logFile 2>&1

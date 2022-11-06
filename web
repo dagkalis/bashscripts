@@ -1,0 +1,6 @@
+#!/bin/bash
+# this script works only if the repo is cloned with ssh, tested only on github
+initial=$(git config --get remote.origin.url)
+gitRemoved="${initial/.git/""}"
+ready="${gitRemoved/:/"/"}"
+xdg-open $ready

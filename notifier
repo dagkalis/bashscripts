@@ -1,6 +1,1 @@
-#!/bin/bash
-logFile=/home/keftes/user/programming/Notifier/out/artifacts/Notifier_main_jar/log.txt
-echo -e "\n\n" >> $logFile
-date +'%d-%m-%Y_%H:%M' >> $logFile
-
-java -p /home/keftes/Desktop/javafx-sdk-17.0.1/lib --add-modules javafx.controls,javafx.fxml -jar /home/keftes/user/programming/Notifier/out/artifacts/Notifier_main_jar/Notifier.main.jar >> $logFile
+notifier_stuff/notifier
