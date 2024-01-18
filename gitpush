@@ -1,65 +1,78 @@
 #!/bin/bash
 
-if [ $# -eq 0 ]
-then
-	echo "no args"
-	exit
-fi
+main() {
+    if [ $# -eq 0 ]
+    then
+        echo "no args"
+        exit
+    fi
 
-branch=$(git rev-parse --abbrev-ref HEAD)
-echo $branch
-if [ "$branch" = "master" ]
-then
-	echo "you are on master branch"
-	exit
-fi
-echo -e "\n\033[1mBraches:\033[0m"
-git branch
+    commit_message=""
+    force_push=""
 
-echo -e "\n\033[1mcommit message:\033[0m \n$1"
-
-echo -e -n "\n\n\033[1mCommit?\033[0m [y/n]: "
-declare -i answer
-while true; do
-    read yn
-    case $yn in
-        [Yy]* ) gitcommit "$1"; break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
+    # Iterate through all command-line arguments
+    while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -f)
+        # Set the flag if '-f' is present
+        force_push="-f"
+        shift
+        ;;
+        *)
+        # Assume any other argument is the input string
+        commit_message="$1"
+        shift
+        ;;
     esac
-done
+    done
 
-#old stuff, not used any more, kept it in case I need it
-# if [ 1 -eq 0 ]; then 
-# select yn in "Yes" "No"; do
-#     case $yn in
-#         Yes ) gitcommit $1; break;;
-#         No ) exit;;
-#     esac
-# done
-# fi
+    # get current branch
+    branch=$(git rev-parse --abbrev-ref HEAD)
+    echo $branch
 
-echo -e -n "\n\n\033[1mPush?\033[0m [y/n]: "
-while true; do
-    read -p "" yn
-    case $yn in
-        [Yy]* ) git push origin $brach; break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
+    # print all branches
+    echo -e "\n\033[1mBraches:\033[0m"
+    git branch
 
-echo -e -n "\n\n\033[1mMerge?\033[0m [y/n]: "
-declare -i answer
-while true; do
-    read -p "" yn
-    case $yn in
-        [Yy]* ) info=`git config --get remote.origin.url | grep -o -P '(?<=com:).*(?=.git)'`; link="https://github.com/$info/compare/$branch"; google-chrome $link; break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
+    # print commit message arg
+    echo -e "\n\033[1mCommit message:\033[0m \n$1"
 
+    if question "Commit?"; then
+        git add .
+        git commit -m "$commit_message"
+    else
+        exit
+    fi
+
+    if question "Push?"; then
+        git push origin $force_push $brach
+    else
+        exit
+    fi
+
+    # if question "PR?"; then
+    #     info=`git config --get remote.origin.url | grep -o -P '(?<=com:).*(?=.git)'`
+    #     link="https://github.com/$info/compare/develop...feature/$branch"
+    #     brave-browser $link
+    # else
+    #     exit
+    # fi
+}
+
+question() {
+    echo -e -n "\n\n\033[1m${1}\033[0m [y/n]: "
+    declare -i answer
+    while true; do
+        read yn
+        case $yn in
+            [Yy]* ) return 0;; # true
+            [Nn]* ) return 1;; # false
+            * ) echo "Please answer yes or no.";;
+        esac
+    done
+}
+
+main "$@"
 exit
 
 # l=`git config --get remote.origin.url | grep -o -P '(?<=com:).*(?=.git)'`

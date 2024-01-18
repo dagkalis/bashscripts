@@ -1,0 +1,3 @@
+#!/bin/bash
+echo thunder
+rm tmp/pids/server.pid

@@ -4,6 +4,6 @@ then
     echo -e "\t Give script name you dufus..."
     exit
 fi
-echo "#!/bin/bash" > /home/keftes/user/programming/bashscripts/$1 
-chmod +x /home/keftes/user/programming/bashscripts/$1  
-code /home/keftes/user/programming/bashscripts/$1 &
+echo "#!/bin/bash" > ~/dev/bashscripts/$1 
+chmod +x ~/dev/bashscripts/$1 
+code ~/dev/bashscripts/$1 

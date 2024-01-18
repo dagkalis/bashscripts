@@ -5,7 +5,7 @@
 thunder=`xclip -out -selection primary`
 if [[ "$thunder" =~ \.com|\.gr|\.eu|\.gov|.org ]]; then
     echo "$thunder"
-    google-chrome "$thunder" &
+    brave-browser "$thunder" &
     exit
 fi
 
@@ -15,5 +15,5 @@ for term in $thunder; do
     search="$search%20$term"
 done
 #echo $search
-google-chrome "http://www.google.com/search?q=$search" &
+brave-browser "http://www.google.com/search?q=$search" &
 exit
