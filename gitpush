@@ -40,8 +40,10 @@ main() {
     if question "Commit?"; then
         git add .
         git commit -m "$commit_message"
-    else
-        exit
+    fi
+
+    if question "Run rubocop test?"; then
+        rake test TEST=test/lint/rubocop_test.rb
     fi
 
     if question "Push?"; then
