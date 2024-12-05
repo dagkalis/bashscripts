@@ -1,0 +1,31 @@
+#!/bin/bash
+# Check if arguments are provided
+if [ $# -eq 0 ]; then
+  echo "No arguments provided. Please provide one or more strings."
+  exit 1
+fi
+
+branch_prefix="-f"
+
+# Loop through the arguments and filter out -f and -h
+for arg in "$@"; do
+  if [ "$arg" == "-f" ] || [ "$arg" == "-h" ]; then
+    if [ "$arg" == "-f" ]; then
+      branch_type="feature"
+    elif [ "$arg" == "-h" ]; then
+      branch_type="hotfix"
+    fi
+  else
+    input="$input $arg"
+  fi
+done
+
+# Trim leading whitespace from input
+input=$(echo "$input" | sed 's/^[[:space:]]*//')
+
+# Replace PHOENIX with a placeholder, convert to lowercase, trim whitespace,
+# replace spaces with hyphens, and then restore the placeholder back to PHOENIX
+result=$(echo "$input" | sed 's/PHOENIX/phoenix_placeholder/g' | tr '[:upper:]' '[:lower:]' | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' -e 's/[[:space:]]\+/-/g' | sed 's/phoenix_placeholder/PHOENIX/g')
+
+# Output the result
+echo "$branch_type/$result"

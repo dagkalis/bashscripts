@@ -1,3 +1,4 @@
 #!/bin/bash
-cx lease -s welcome-staging-azure -p 22 -t 15 -f 0.0.0.0/0
+ip=$1
+cx lease -s welcome-staging-azure -p 22 -t 10 -f $ip
 cx ssh antelope -s welcome-staging-azure
