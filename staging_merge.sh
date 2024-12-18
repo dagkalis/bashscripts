@@ -29,3 +29,7 @@ fi
 if question "push?"; then
     git push
 fi 
+
+if question "checkout to initial branch?"; then
+    git checkout $branch
+fi
